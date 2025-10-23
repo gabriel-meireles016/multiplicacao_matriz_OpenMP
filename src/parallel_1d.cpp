@@ -18,7 +18,7 @@ public:
     // Construtor de cópia
     Matrix(const Matrix& other) : n(other.n), data(other.data) {}
     
-    // Carregar matriz de arquivo
+    // Carrega matriz de arquivo
     void loadFromFile(const std::string& filename) {
         std::ifstream file(filename, std::ios::binary);
         file.read(reinterpret_cast<char*>(&n), sizeof(n));
@@ -87,7 +87,7 @@ int main() {
         Matrix A(n);
         Matrix B(n);
         
-        // Tenta carregar do arquivo, se não existir, gera e salva
+        // Carrega os arquivos de entrada
         std::string fileA = "matrix_A_" + std::to_string(n) + ".bin";
         std::string fileB = "matrix_B_" + std::to_string(n) + ".bin";
         
