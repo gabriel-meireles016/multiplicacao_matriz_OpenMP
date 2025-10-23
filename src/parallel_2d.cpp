@@ -3,6 +3,7 @@
 #include <random>
 #include <chrono>
 #include <iomanip>
+#include <fstream>
 #include <omp.h>
 
 class Matrix {
@@ -17,26 +18,15 @@ public:
     // Construtor de cópia
     Matrix(const Matrix& other) : n(other.n), data(other.data) {}
     
-    // Preencher matriz com valores aleatórios
-    void fillRandom() {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<double> dis(0.0, 100.0);
-        
+    // Carregar matriz de arquivo
+    void loadFromFile(const std::string& filename) {
+        std::ifstream file(filename, std::ios::binary);
+        file.read(reinterpret_cast<char*>(&n), sizeof(n));
+        data.resize(n, std::vector<double>(n, 0.0));
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                data[i][j] = dis(gen);
-            }
+            file.read(reinterpret_cast<char*>(data[i].data()), n * sizeof(double));
         }
-    }
-    
-    // Preencher matriz com valor específico
-    void fillValue(double value) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                data[i][j] = value;
-            }
-        }
+        file.close();
     }
     
     // Acesso aos elementos
@@ -98,9 +88,23 @@ int main() {
         Matrix A(n);
         Matrix B(n);
         
-        // Preenche matrizes com valores aleatórios
-        A.fillRandom();
-        B.fillRandom();
+        // Tenta carregar do arquivo, se não existir, gera e salva
+        std::string fileA = "matrix_A_" + std::to_string(n) + ".bin";
+        std::string fileB = "matrix_B_" + std::to_string(n) + ".bin";
+        
+        std::ifstream testA(fileA);
+        std::ifstream testB(fileB);
+        
+        if (testA.good() && testB.good()) {
+            testA.close();
+            testB.close();
+            A.loadFromFile(fileA);
+            B.loadFromFile(fileB);
+            std::cout << "Matrizes carregadas do arquivo." << std::endl;
+        } else {
+            std::cout << "Erro ao carregar as matrizes." << std::endl;
+            return 1;
+        }
         
         // Mede tempo da implementação
         double time_par_2d = measureTime(parallel_2d, A, B);
