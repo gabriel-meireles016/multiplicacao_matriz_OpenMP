@@ -19,12 +19,12 @@ Programa paralelo usando OpenMP para resolver a multiplicação de duas matrizes
 
 # Casos de Teste
 
-Para iniciar o processo, faça execute o a geração de exemplos de entrada:
+Para iniciar o processo, execute a geração de exemplos de entrada:
 ```
 ./obj/generate_input
 ```
 
-Após a geração dos exemplos de entrada, cada código deve ser executado um por vez:
+Após a geração dos exemplos de entrada, cada código deve ser executado individualmente na linha de comando:
 ```
 ./obj/sequencial
 ./obj/parallel_1d
