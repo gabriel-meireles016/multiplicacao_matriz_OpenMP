@@ -6,6 +6,7 @@ Programa paralelo usando OpenMP para resolver a multiplicação de duas matrizes
 - Realiza a multiplicação de forma Sequencial.
 - Realiza a multiplicação de forma Paralela com Particionamento 1D.
 - Realiza a multiplicação de forma Paralela com Particionamento 2D.
+- Realiza a multiplicação de forma Paralela com Particionamento 2D com Tiling.
 - Mede o tempo de execução de cada um dos algoritmos.
 
 ## Requisitos
@@ -29,4 +30,5 @@ Após a geração dos exemplos de entrada, cada código deve ser executado indiv
 ./obj/sequencial
 ./obj/parallel_1d
 ./obj/parallel_2d
+./obj/parallel_2d_tiling
 ```
